@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,9 +46,14 @@ public class GovernanceController {
 	String fileURL;
 
 	@RequestMapping("/governance")
-	public ModelAndView GovView() {
+	public ModelAndView GovView(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
+		String username=(String) session.getAttribute("username");
+		if(username!=null && !username.equals(""))
+		{
+			
+		
 		ArrayList<GovernanceDao> listGov = new ArrayList<>();
 		ArrayList<ProjectDao> listProj = new ArrayList<>();
 
@@ -80,11 +86,14 @@ public class GovernanceController {
 		}
 
 		mv.setViewName("Governance");
+		}else {
+			mv.setViewName("/login");
+		}
 		return mv;
 	}
 
 	@RequestMapping(value = "/addGov", method = RequestMethod.POST)
-	public String addGovernance(HttpServletRequest request, GovernanceDao gov, @RequestParam("file") MultipartFile file,
+	public String addGovernance(HttpServletRequest request,HttpSession session, GovernanceDao gov, @RequestParam("file") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 		System.out.println("Governance object " + gov);
 		int result = 0;
@@ -97,7 +106,7 @@ public class GovernanceController {
 			String strDateFormat = "yyMMddhhmmss";
 			DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
 			String formattedDate = dateFormat.format(date);
-
+			gov.setModifyby((String) session.getAttribute("username"));
 			if (!file.isEmpty()) {
 				gov.setMom(formattedDate + "_" + file.getOriginalFilename().toString().trim());
 			}
@@ -123,7 +132,7 @@ public class GovernanceController {
 	}
 
 	@RequestMapping(value="/updateGov",method=RequestMethod.POST)
-	public String updateGoo(HttpServletRequest request, GovernanceDao gov, @RequestParam("file") MultipartFile file,
+	public String updateGoo(HttpServletRequest request,HttpSession session, GovernanceDao gov, @RequestParam("file") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 		int result = 0;
 		boolean fileDelete = false;
@@ -141,7 +150,7 @@ public class GovernanceController {
 		String strDateFormat = "yyMMddhhmmss";
 		DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
 		String formattedDate = dateFormat.format(date);
-		
+		gov.setModifyby((String) session.getAttribute("username"));
 		
 		if (file.isEmpty()) {
 			gov.setMom(govDup.getMom());

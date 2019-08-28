@@ -32,7 +32,7 @@ public class POServiceImpl implements POService {
 	
 	@Override
 	public int addPO(PODao po) {
-		String sql="Insert into POTRACKER.TBLPO (PROJECTID,POTYPE,PONUMBER,PODATE,AMOUNT,STARTDATE,ENDDATE,HRCOST,THIRDPARTYCOST,WBSCODE,POFILE,MODIFYBY,PROJECTNAME) "
+		String sql="Insert into TBLPO (PROJECTID,POTYPE,PONUMBER,PODATE,AMOUNT,STARTDATE,ENDDATE,HRCOST,THIRDPARTYCOST,WBSCODE,POFILE,MODIFYBY,PROJECTNAME) "
 				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		
@@ -62,7 +62,7 @@ public class POServiceImpl implements POService {
 
 	@Override
 	public int updatePO(int id, PODao po) {
-		String sql="update POTRACKER.TBLPO set PROJECTID=?,POTYPE=?,PONUMBER=?,PODATE=?,AMOUNT=?,STARTDATE=?,ENDDATE=?,HRCOST=?,THIRDPARTYCOST=?,WBSCODE=?,POFILE=?,MODIFYBY=?,PROJECTNAME=? where POID=?";
+		String sql="update TBLPO set PROJECTID=?,POTYPE=?,PONUMBER=?,PODATE=?,AMOUNT=?,STARTDATE=?,ENDDATE=?,HRCOST=?,THIRDPARTYCOST=?,WBSCODE=?,POFILE=?,MODIFYBY=?,PROJECTNAME=? where POID=?";
 		
 		int result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
 			

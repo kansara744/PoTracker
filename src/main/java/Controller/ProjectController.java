@@ -3,6 +3,7 @@ package Controller;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,19 @@ public class ProjectController {
 	
 	
 	
+	
+	
 	@RequestMapping("/")
-	public ModelAndView show(HttpServletRequest request,HttpSession session) { 
+	public ModelAndView show(HttpServletRequest request,HttpSession session,HttpServletResponse response) { 
 		ModelAndView mv=new ModelAndView(); 
+	
+		response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+
+		
+		String username=(String) session.getAttribute("username");
+		if(username!=null && !username.equals("")) {
+			
+		
 		try {
 		ArrayList<ProjectDao> listProject=projServ.getAllProject();
 		//System.out.println(listProject);
@@ -47,6 +58,9 @@ public class ProjectController {
 		mv.setViewName("project_admin");
 		}catch (Exception e) {
 			System.out.println(e);
+		}
+		}else {
+			mv.setViewName("/login");
 		}
 		return mv;
 	}

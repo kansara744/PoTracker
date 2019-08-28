@@ -45,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int InsertProject(ProjectDao project) {
 		
-		String sql="Insert into POTRACKER.TBLPROJECT (PROJECTNAME,HANDOVERDATE,CITY,COUNTRY,CUSTOMERNAME,CUSTOMERNO,OPERATIONMANAGER,TECHNICALMANAGER,ACCOUNTMANAGER,DELIVERYMANAGER,MODIFYBY,VERSION,CLOSEDFLAG,SUPPORTTYPE)"
+		String sql="Insert into TBLPROJECT (PROJECTNAME,HANDOVERDATE,CITY,COUNTRY,CUSTOMERNAME,CUSTOMERNO,OPERATIONMANAGER,TECHNICALMANAGER,ACCOUNTMANAGER,DELIVERYMANAGER,MODIFYBY,VERSION,CLOSEDFLAG,SUPPORTTYPE)"
 				+ " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		System.out.println("Project "+project);
 		int result=jdbcTemplate.update(sql,new PreparedStatementSetter() {

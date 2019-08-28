@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,9 +49,13 @@ public class POController {
 	// "/home/eliteaaa/Application/SterliteTechMOM/POFile/";
 
 	@RequestMapping("/potracker")
-	public ModelAndView PoView() {
+	public ModelAndView PoView(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
+		String username=(String) session.getAttribute("username");
+		if(username!=null && !username.equals("")) {
+			
+		
 		ArrayList<ProjectDao> listProject = new ArrayList<>();
 		ArrayList<PODao> listPO = new ArrayList<>();
 		try {
@@ -80,6 +86,9 @@ public class POController {
 		}
 
 		mv.setViewName("PO");
+		}else {
+			mv.setViewName("/login");
+		}
 		return mv;
 	}
 
